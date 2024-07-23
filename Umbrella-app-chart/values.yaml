@@ -1,0 +1,61 @@
+grafana:
+  datasources:
+    datasources.yaml:
+      apiVersion: 1
+      datasources:
+      - access: proxy
+        editable: true
+        isDefault: true
+        name: Prometheus
+        type: prometheus
+        uid: prometheus
+        url: http://prometheus-server
+      - access: browser
+        editable: true
+        isDefault: false
+        jsonData:
+          derivedFields:
+          - datasourceUid: tempo
+            matcherRegex: \[.+,(.+),.+\]
+            name: TraceID
+            url: $${__value.raw}
+        name: Loki
+        type: loki
+        uid: loki
+        url: http://loki:3100
+  grafana.ini:
+    analytics:
+      check_for_updates: true
+    grafana_net:
+      url: https://grafana.net
+    log:
+      mode: console
+    paths:
+      data: /var/lib/grafana/
+      logs: /var/log/grafana
+      plugins: /var/lib/grafana/plugins
+      provisioning: /etc/grafana/provisioning
+    server:
+      domain: graf.remonline.app
+      http_port: 3000
+      root_url: https://graf.remonline.app:443/
+      serve_from_sub_path: false
+  ingress:
+    enabled: false
+    hosts:
+    - graf.remonline.app
+  nodeSelector:
+    node_pool: monitoring
+  persistence:
+    enabled: true
+    size: 2Gi
+  imageRenderer:
+    enabled: false
+    env:
+      HTTP_HOST: 0.0.0.0
+      JAEGER_AGENT_PORT: 6831
+    nodeSelector:
+      node_pool: monitoring
+  env:
+    GF_RENDERING_SERVER_URL: http://grafana-image-renderer.monitoring:8081/render
+    GF_RENDERING_CALLBACK_URL: http://grafana.monitoring:80/

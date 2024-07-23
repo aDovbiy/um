@@ -1,0 +1,11 @@
+apiVersion: v2
+type: application
+name: umbrella
+version: 1.0.0
+dependencies:
+  - name: grafana
+    version: 6.57.4
+    repository: https://grafana.github.io/helm-charts
+  - name: reloader
+    version: 1.0.119
+    repository: https://stakater.github.io/stakater-charts

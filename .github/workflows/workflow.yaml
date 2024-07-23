@@ -12,7 +12,8 @@ jobs:
     - name: Extract branch name
       uses: vazco/github-actions-branch-name@v1
       id: branch
-    - name: deploy
+    
+    - name: test k8s
       env:
         KUBE_CONFIG_DATA: ${{ secrets.UM_K8S_KUBECONFIG }}
       run: |
@@ -20,3 +21,13 @@ jobs:
           export KUBECONFIG=./qkube.conf
           kubectl config current-context
           kubectl get nodes
+    
+    - name: test helm
+      env:
+        KUBE_CONFIG_DATA: ${{ secrets.UM_K8S_KUBECONFIG }}
+      run: |
+          helm dep update ./Umbrella-app-chart/.
+          helm package Umbrella-app-chart/ -u --app-version 1.0.2 --version 1.0.2
+          helm lint umbrella-1.0.2.tgz
+          
+    
