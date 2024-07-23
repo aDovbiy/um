@@ -1,0 +1,9 @@
+dependencies:
+- name: grafana
+  repository: https://grafana.github.io/helm-charts
+  version: 6.57.4
+- name: reloader
+  repository: https://stakater.github.io/stakater-charts
+  version: 1.0.119
+digest: sha256:d3454b193e7ddd976eae78fde0130b5be52bdc62656aa2e9e31aa083be745338
+generated: "2024-07-23T19:23:26.767217514+03:00"

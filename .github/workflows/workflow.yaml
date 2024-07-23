@@ -26,8 +26,20 @@ jobs:
       env:
         KUBE_CONFIG_DATA: ${{ secrets.UM_K8S_KUBECONFIG }}
       run: |
-          helm dep update ./Umbrella-app-chart/.
-          helm package Umbrella-app-chart/ -u --app-version 1.0.2 --version 1.0.2
+          helm dep update ./umbrella-app-chart/.
+          helm package umbrella-app-chart/ -u --app-version 1.0.2 --version 1.0.2
           helm lint umbrella-1.0.2.tgz
+    
+    - name: Helm Push              
+      uses: bsord/helm-push@v4.1.0
+      with:
+        useOCIRegistry: true
+        #registry-url:  oci://ghcr.io/${{ github.repository }}
+        registry-url: oci://ghcr.io/adovbiy/um
+        username: bsord
+        access-token: ${{ secrets.REGISTRY_ACCESS_TOKEN }}
+        force: true
+        chart-folder: umbrella-app-chart
+        update-dependencies: true
           
     
