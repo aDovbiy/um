@@ -1,0 +1,22 @@
+name: Umbrella Automate
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Extract branch name
+      uses: vazco/github-actions-branch-name@v1
+      id: branch
+    - name: deploy
+      env:
+        KUBE_CONFIG_DATA: ${{ secrets.UM_K8S_KUBECONFIG }}
+      run: |
+          printf "$KUBE_CONFIG_DATA" >> ./qkube.conf          
+          export KUBECONFIG=./qkube.conf
+          kubectl config current-context
+          kubectl get nodes
