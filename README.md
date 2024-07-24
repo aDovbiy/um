@@ -9,7 +9,7 @@ For this sample used Community Charts as Umbrella Charts: Incorporate community 
 Implement Build a CI/CD Pipeline using GitHub Actions that validates and publishes Helm charts to the repo and as OCI images to GHCR.
 
 Repository organization:
-File github\workflow\workflow.yaml contains the automation script for pushing to the master branch.
+File https://github.com/aDovbiy/um/blob/main/.github/workflows/workflow.yaml contains the automation script for pushing to the master branch.
 Repository has two subsystems:
 Fully automatic Argo management (argocd-app-chart)
 Automatic deployment of diagrams to GitHub Container Registry (GHCR) as OCI images (Our APPs) umbrella-app-chart
