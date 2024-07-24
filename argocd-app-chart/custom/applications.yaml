@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: umbrella
+  namespace: argocd
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    chart: umbrella
+    repoURL: ghcr.io/adovbiy/um
+    targetRevision: 1.0.0
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

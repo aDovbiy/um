@@ -1,0 +1,57 @@
+argo-cd:
+  global:
+    addPrometheusAnnotations: true
+
+  server:
+    replicas: 1
+    env:
+      - name: ARGOCD_API_SERVER_REPLICAS
+        value: '1'
+    extraArgs:
+       - --insecure
+       - --enable-gzip
+    resources:
+      requests:
+        cpu: 200m
+        memory: 200Mi
+      limits:
+        cpu: 700m
+        memory: 700Mi
+  configs:
+    cm:
+      exec.enabled: true
+      timeout.reconciliation: 30s
+  controller:
+    metrics:
+      enabled: true
+    args:
+      appResyncPeriod: "300"
+    resources:
+      requests:
+        cpu: 100m
+        memory: 100Mi
+      limits:
+        cpu: 300m
+        memory: 500Mi
+  dex:
+    enabled: false
+  redis:
+    resources:
+      requests:
+        cpu: 10m
+        memory: 10Mi
+      limits:
+        cpu: 100m
+        memory: 200Mi
+  repoServer:
+    resources:
+      requests:
+        cpu: 100m
+        memory: 100Mi
+      limits:
+        cpu: 600m
+        memory: 900Mi
+  applicationSet:
+    enabled: false
+  notifications:
+    enabled: false

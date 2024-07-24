@@ -9,11 +9,16 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Extract branch name
-      uses: vazco/github-actions-branch-name@v1
-      id: branch
     
-    - name: test k8s
+    - name: Test helm
+      env:
+        KUBE_CONFIG_DATA: ${{ secrets.UM_K8S_KUBECONFIG }}
+      run: |
+          helm dep update ./umbrella-app-chart/.
+          helm package umbrella-app-chart/ -u --app-version 1.0.2 --version 1.0.2
+          helm lint umbrella-1.0.2.tgz
+          
+    - name: ArgoCD install and add apps
       env:
         KUBE_CONFIG_DATA: ${{ secrets.UM_K8S_KUBECONFIG }}
       run: |
@@ -21,22 +26,21 @@ jobs:
           export KUBECONFIG=./qkube.conf
           kubectl config current-context
           kubectl get nodes
-    
-    - name: test helm
-      env:
-        KUBE_CONFIG_DATA: ${{ secrets.UM_K8S_KUBECONFIG }}
-      run: |
-          helm dep update ./umbrella-app-chart/.
-          helm package umbrella-app-chart/ -u --app-version 1.0.2 --version 1.0.2
-          helm lint umbrella-1.0.2.tgz
-    
+          helm repo add argo-cd https://argoproj.github.io/argo-helm
+          helm dep update ./argocd-app-chart/
+          helm lint ./argocd-app-chart/
+          helm upgrade --install argocd ./argocd-app-chart/ --namespace argocd --create-namespace --wait
+          kubectl apply -f ./argocd-app-chart/custom/.
+          echo Use for auth "kubectl get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" --namespace argocd | base64 -d"
+          echo Use for connect "kubectl port-forward svc/argocd-server -n argocd 8080:443"
+   
     - name: Helm Push              
       uses: bsord/helm-push@v4.1.0
       with:
         useOCIRegistry: true
         #registry-url:  oci://ghcr.io/${{ github.repository }}
         registry-url: oci://ghcr.io/adovbiy/um
-        username: bsord
+        username: adovbiy
         access-token: ${{ secrets.REGISTRY_ACCESS_TOKEN }}
         force: true
         chart-folder: umbrella-app-chart
