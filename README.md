@@ -42,6 +42,8 @@ https://github.com/aDovbiy/um/blob/main/umbrella-app-chart/values.yaml
 
 ![image](https://github.com/user-attachments/assets/c640c137-9bcc-46a5-8c88-8aca0c2bb749)
 
+!
+
 
 
 
