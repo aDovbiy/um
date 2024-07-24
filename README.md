@@ -15,4 +15,27 @@ Fully automatic Argo management (argocd-app-chart)
 Automatic deployment of diagrams to GitHub Container Registry (GHCR) as OCI images (Our APPs) umbrella-app-chart
 All secrets and authorization parameters are hidden in the secret manager and are accessible only to the administrator
 
+### All workflows https://github.com/aDovbiy/um/actions
+
+#### ArgoCD  Connection
+```ShellSession
+# Use for auth in ArgoCD
+kubectl get secret argocd-initial-admin-secret -o jsonpath={.data.password} --namespace argocd | base64 -d
+
+# Use for connect to ArgoCD over kubectl port-forward
+kubectl port-forward svc/argocd-server -n argocd 8080:443
+```
+##### Files for manage ArgoCD
+
+https://github.com/aDovbiy/um/blob/main/argocd-app-chart/custom/applications.yaml
+
+##### Files for manage Umbrella Chart
+
+https://github.com/aDovbiy/um/blob/main/umbrella-app-chart/Chart.yaml
+
+https://github.com/aDovbiy/um/blob/main/umbrella-app-chart/values.yaml
+
+
+
+
 
