@@ -1,0 +1,64 @@
+Home Task: Set Up a GitHub Repo for Helm Charts and ArgoCD
+
+
+Overview
+Your task is to create a private GitHub repo that 
+will act as a base for managing Helm charts and using ArgoCD in a GitOps way. 
+This repo will include a CI/CD pipeline for validating and publishing 
+Helm charts, with support for pushing these charts as OCI images to the 
+GitHub Container Registry (GHCR). You’ll also need to set up the repo so 
+that ArgoCD can manage itself and deploy specific Kubernetes components.
+
+
+Goals
+Set Up the Repo: Create a GitHub repository to store and manage Helm charts and ArgoCD manifests
+Use Community Charts as Umbrella Charts: Incorporate community Helm charts as umbrella charts for managing complex deployments.
+Build a CI/CD Pipeline: Implement a pipeline using GitHub Actions that validates and publishes Helm charts to the repo and as OCI images to GHCR.
+Organize the Repo: Arrange the repo to enable ArgoCD to manage itself and set up the following components on a Kubernetes cluster:
+Prometheus Stack
+External Secrets
+Reloader
+
+
+Requirements
+Repository Setup:
+Use GitHub Actions for the pipeline.
+Set up workflows for checking and publishing Helm charts.
+Include ArgoCD configurations for self-management and deploying the Kubernetes components mentioned.
+No manual steps
+Kubernetes Components Setup:
+Ensure charts for the Prometheus Stack, External Secrets, and Reloader are ready to go.
+Provide clear documentation on how these components are configured and managed using ArgoCD.
+
+
+Documentation:
+Write a clear README.md that explains the repo setup and usage.
+Offer setup instructions for any required dependencies.
+Version Control:
+Make sure all changes are committed with detailed messages.
+Manage changes through branches and pull requests.
+
+
+Presentation
+Live Demo: In the interview, you’ll need to set up a Kubernetes cluster from scratch on a platform of your choice (like k3s, EKS, GKE, AKS).
+Demonstration:
+Show how the repo configurations deploy and manage the Kubernetes components.
+Display the CI/CD pipeline in action as it validates and publishes the Helm charts.
+
+
+What We’re Looking For
+Thoroughness: Make sure all parts are correctly implemented and well-documented.
+Adherence to Standards: Use best practices for Helm development, GitOps, and CI/CD.
+Clarity in Documentation: Documentation should be easy to understand and complete.
+Skill Demonstration: Be prepared to set up from scratch and troubleshoot live during the demo.
+
+
+This task is designed to check your skills in Kubernetes, Helm chart management, setting up CI/CD pipelines, and using ArgoCD for GitOps.
+
+
+
+
+Access to the private git repo should be provided by 16.07.
+
+
+Good luck!
